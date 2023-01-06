@@ -390,6 +390,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
     String mobileToken = ref.read(iCreateCustomerInfoViewModel).createCustomerResponse.data.data[0].mobileToken;
     String customerName = ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].name;
     String customerSurName= ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].surname;
+    box.clear();
     box.put("sifre", mobileToken);
     box.put("customerId", customerId);
     box.put("customerName", customerName);

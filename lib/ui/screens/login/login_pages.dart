@@ -209,6 +209,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
         String customerName = iGetCusomerLoginViewModel.customerLoginResponse.data.data[0].name;
         String customerSurname = iGetCusomerLoginViewModel.customerLoginResponse.data.data[0].surname;
         var box = Hive.box("CustomerLoginHive");
+        box.clear();
         box.put("sifre", token);
         box.put("customerId", customerId);
         box.put("customerName", customerName);
