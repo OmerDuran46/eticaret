@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eticaret/core/constants/constants.dart';
+import 'package:eticaret/ui/screens/homePage/account/login_control_page/login_control_page_cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,13 +30,14 @@ class _CartPageState extends ConsumerState<CartPage> {
   double? satisFiyati = 0.0;
   double? toplamFiyat = 0.0;
   double? genelToplamFiyat = 0.0;
-  String? yeniToken;
+  String loginControl="false";
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    yeniToken=Constants.applicationTokenGet();
+    loginControl=Constants.parolaGetir();
     getCart();
   }
 
@@ -65,7 +67,15 @@ class _CartPageState extends ConsumerState<CartPage> {
         ref.watch(iGetCartInfoViewModel),
         ref.watch(iGetApplicationLoginInfoViewModel),
       ),
-      floatingActionButton: Container(
+      floatingActionButton: floatingActionButton(context),
+    );
+  }
+
+  Container floatingActionButton(BuildContext context) {
+    if(loginControl=="false"){
+      return Container();
+    }else{
+      return Container(
         width: (MediaQuery.of(context).size.width - 30) / 1,
         height: 90,
         padding: const EdgeInsets.only(right: 10, left: 10),
@@ -106,16 +116,18 @@ class _CartPageState extends ConsumerState<CartPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
+
+    }
+
   }
 
   getCart() {
-    ref.read(iGetCartInfoViewModel).getCart(widget.customerId,yeniToken);
+    ref.read(iGetCartInfoViewModel).getCart(widget.customerId);
   }
 
   getCart2() {
-    ref.watch(iGetCartInfoViewModel).getCart(widget.customerId,yeniToken);
+    ref.watch(iGetCartInfoViewModel).getCart(widget.customerId);
   }
 
   deleteCartItem(productId, variantId) async {
@@ -126,154 +138,162 @@ class _CartPageState extends ConsumerState<CartPage> {
     return iDeleteCartItemInfoViewModel.deleteCartItemResponse.data.message[0].text[0].toString();
   }
 
-  Widget getCartWidget1(IGetCartInfoViewModel iGetCartInfoViewModel,IGetApplicationLoginViewModel iGetApplicationLoginViewModel) {
-    if (iGetCartInfoViewModel.getCartResponse.status == Status.loading) {
-      return const Center(
-        child: CupertinoActivityIndicator(),
-      );
-    } else if (iGetCartInfoViewModel.getCartResponse.status == Status.completed) {
-      var product = iGetCartInfoViewModel.getCartResponse.data.data!.products;
-      toplamFiyat = iGetCartInfoViewModel.getCartResponse.data.data!.priceCart;
-      genelToplamFiyat = iGetCartInfoViewModel.getCartResponse.data.data!.priceGeneral;
 
-      return Container(
-        color: Colors.grey.shade200,
-        padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
-        height: 550,
-        child: ListView.builder(
-          itemCount: product!.length,
-          padding: const EdgeInsets.all(1),
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.all(5),
-              child: Material(
-                elevation: 1,
-                shadowColor: Colors.white70,
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  color: Colors.white10,
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        height: 100,
-                        child: ListTile(
-                          title: Text(product[index].title),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(product[index].variantName),
-                              Text(
-                                "${double.parse((product[index].priceSell*(1+18/100)).toStringAsFixed(2))} TL",
-                                style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+  Widget getCartWidget1(IGetCartInfoViewModel iGetCartInfoViewModel,IGetApplicationLoginViewModel iGetApplicationLoginViewModel) {
+    if(loginControl=="false"){
+      return LoginControlCartPage();
+    }else{
+      if (iGetCartInfoViewModel.getCartResponse.status == Status.loading) {
+        return const Center(
+          child: CupertinoActivityIndicator(),
+        );
+      } else if (iGetCartInfoViewModel.getCartResponse.status == Status.completed) {
+        var product = iGetCartInfoViewModel.getCartResponse.data.data!.products;
+        toplamFiyat = iGetCartInfoViewModel.getCartResponse.data.data!.priceCart;
+        genelToplamFiyat = iGetCartInfoViewModel.getCartResponse.data.data!.priceGeneral;
+
+        return Container(
+          color: Colors.grey.shade200,
+          padding: const EdgeInsets.only(right: 5, left: 5, top: 5),
+          height: 550,
+          child: ListView.builder(
+            itemCount: product!.length,
+            padding: const EdgeInsets.all(1),
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.all(5),
+                child: Material(
+                  elevation: 1,
+                  shadowColor: Colors.white70,
+                  borderRadius: BorderRadius.circular(5),
+                  child: Container(
+                    color: Colors.white10,
+                    padding: const EdgeInsets.all(5),
+                    margin: const EdgeInsets.all(5),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(top: 10),
+                          height: 100,
+                          child: ListTile(
+                            title: Text(product[index].title),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(product[index].variantName),
+                                Text(
+                                  "${double.parse((product[index].priceSell*(1+18/100)).toStringAsFixed(2))} TL",
+                                  style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            leading: Container(
+                              width: 75,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(
+                                      product[index].image!.small,
+                                    )),
                               ),
-                            ],
-                          ),
-                          leading: Container(
-                            width: 75,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                product[index].image!.small,
-                              )),
                             ),
                           ),
                         ),
-                      ),
-                      const Divider(
-                        endIndent: 10,
-                        indent: 10,
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(height: 5,),
-                      Container(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  deleteCartItem(
-                                    product[index].id,
-                                    product[index].variantId == 0 ? "" : product[index].variantId,
-                                  ).then((value) {
-                                    Fluttertoast.showToast(
-                                        msg: gelenMesaj(ref.watch(iDeleteCartItemInfoViewModel)),
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.green,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                    getApplicationToken(iGetApplicationLoginViewModel).then((value){
-                                      getCart2();
-                                    });
-
-
-                                  });
-                                },
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.grey,
-                                )),
-
-                            Text(
-                              "${product[index].count==1?"":double.parse((product[index].priceTotal).toStringAsFixed(2))}",
-                            ),
-                            Row(
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      addToCart(
-                                        variantId: product[index].variantId == 0 ? "" : product[index].variantId,
-                                        productCount: 1,
-                                        productId: product[index].id,
-                                      );
+                        const Divider(
+                          endIndent: 10,
+                          indent: 10,
+                          height: 1,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(height: 5,),
+                        Container(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                  onTap: () {
+                                    deleteCartItem(
+                                      product[index].id,
+                                      product[index].variantId == 0 ? "" : product[index].variantId,
+                                    ).then((value) {
+                                      Fluttertoast.showToast(
+                                          msg: gelenMesaj(ref.watch(iDeleteCartItemInfoViewModel)),
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.green,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
                                       getApplicationToken(iGetApplicationLoginViewModel).then((value){
                                         getCart2();
                                       });
 
-                                    },
-                                    child: const Icon(Icons.add)),
-                                Text(
-                                  "  ${product[index].count} Adet  ",
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      int oAnkiCount = product[index].count - 1;
-                                      String oAnkiProductId = product[index].id;
-                                      int oAnkiVariantId = product[index].variantId;
-                                      deleteCartItem(product[index].id, product[index].variantId == 0 ? "" : product[index].variantId).then((value) {
 
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.grey,
+                                  )),
+
+                              Text(
+                                "${product[index].count==1?"":double.parse((product[index].priceTotal).toStringAsFixed(2))}",
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        addToCart(
+                                          variantId: product[index].variantId == 0 ? "" : product[index].variantId,
+                                          productCount: 1,
+                                          productId: product[index].id,
+                                        );
                                         getApplicationToken(iGetApplicationLoginViewModel).then((value){
-                                          addToCart(
-                                              variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
-                                              productCount: oAnkiCount,
-                                              productId: oAnkiProductId);
                                           getCart2();
                                         });
-                                      });
-                                    },
-                                    child: const Icon(Icons.remove))
-                              ],
-                            ),
-                          ],
+
+                                      },
+                                      child: const Icon(Icons.add)),
+                                  Text(
+                                    "  ${product[index].count} Adet  ",
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        int oAnkiCount = product[index].count - 1;
+                                        String oAnkiProductId = product[index].id;
+                                        int oAnkiVariantId = product[index].variantId;
+                                        deleteCartItem(product[index].id, product[index].variantId == 0 ? "" : product[index].variantId).then((value) {
+
+                                          getApplicationToken(iGetApplicationLoginViewModel).then((value){
+                                            addToCart(
+                                                variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
+                                                productCount: oAnkiCount,
+                                                productId: oAnkiProductId).then((value){
+                                              getCart2();
+                                            });
+
+                                          });
+                                        });
+                                      },
+                                      child: const Icon(Icons.remove))
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-      );
-    } else {
-      return const Center(child: Text("Sepet sayfası yüklenirken hata oluştu!"));
+              );
+            },
+          ),
+        );
+      } else {
+        return const Center(child: Text("Sepet sayfası yüklenirken hata oluştu!"));
+      }
+
     }
   }
 
@@ -287,7 +307,7 @@ class _CartPageState extends ConsumerState<CartPage> {
     String token = iGetApplicationLoginViewModel.applicationLoginResponse.data.data[0].token;
     var applicationToken = Hive.box("ApplicationToken");
     applicationToken.put("token", token);
-    yeniToken=applicationToken.get("token");
+
     Constants.tKey;
   }
 }

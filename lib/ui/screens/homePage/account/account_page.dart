@@ -36,6 +36,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -53,11 +54,14 @@ class _AccountPageState extends ConsumerState<AccountPage> {
   }
 
   Widget buildListView(BuildContext context) {
-    if (Constants.customerKey.isNotEmpty) {
+    if (Constants.parolaGetir()=="false") {
+      return const AccountControlPage();
+    } else {
+
       return ListView(
         children: [
           Material(
-            color: Colors.grey.shade300,
+            color: Colors.grey.shade200,
             child: Column(
               children: [
                 const SizedBox(
@@ -119,7 +123,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                                       ),
                                     ),
                                     Text(
-                                     "$name $surName",
+                                      "$name $surName",
                                       style: const TextStyle(
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -333,13 +337,19 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                         InkWell(
                           onTap: () {
                             var box = Hive.box("CustomerLoginHive");
-                            box.clear();
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const AccountControlPage(),
-                                ),
-                                (route) => false);
+                            box.put("sifre","false");
+                            box.put("customerId", "false");
+                            box.put("customerName", "false");
+                            box.put("customerSurName", "false");
+                             setState(() {
+
+                             });
+                            // Navigator.pushAndRemoveUntil(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => const AccountControlPage(),
+                            //     ),
+                            //         (route) => false);
                           },
                           child: const ListTile(
                             leading: Icon(
@@ -361,8 +371,6 @@ class _AccountPageState extends ConsumerState<AccountPage> {
           ),
         ],
       );
-    } else {
-      return const AccountControlPage();
     }
   }
 }

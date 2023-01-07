@@ -33,7 +33,10 @@ class _SearchProductListPageState extends ConsumerState<SearchProductListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getProductFindd();
+    setState(() {
+      getProductFindd();
+    });
+
   }
 
   @override
@@ -108,7 +111,7 @@ class _SearchProductListPageState extends ConsumerState<SearchProductListPage> {
         ),
         backgroundColor: Colors.white,
       ),
-      body: searchProductListWidget(ref.read(iGetSearchInfoViewModel)),
+      body: searchProductListWidget(ref.watch(iGetSearchInfoViewModel)),
     );
   }
 
@@ -133,7 +136,7 @@ class _SearchProductListPageState extends ConsumerState<SearchProductListPage> {
                 slivers: <Widget>[
                   SliverGrid(
                     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
+                      maxCrossAxisExtent: 250,
                       mainAxisExtent: 300,
                     ),
                     delegate: SliverChildBuilderDelegate(
@@ -206,7 +209,7 @@ class _SearchProductListPageState extends ConsumerState<SearchProductListPage> {
         ],
       );
     } else {
-      return const Center(child: Text("Favori ürünü gelirken hata oluştu"));
+      return const Center(child: Text("Hata oluştu"));
     }
   }
 }

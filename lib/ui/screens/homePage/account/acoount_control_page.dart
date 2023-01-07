@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../login/login_pages.dart';
 import '../../member_registration/member_registration_page.dart';
+import 'contant_us/contant_us_page.dart';
 
 class AccountControlPage extends ConsumerStatefulWidget {
   const AccountControlPage({
@@ -168,8 +169,8 @@ class _AccountControlPageState extends ConsumerState<AccountControlPage> {
                     width: double.infinity,
                     height: 285,
                     child: Column(
-                      children: const [
-                        ListTile(
+                      children:  [
+                        const ListTile(
                           leading: Icon(
                             Icons.remove_red_eye_outlined,
                             color: Colors.pink,
@@ -181,10 +182,10 @@ class _AccountControlPageState extends ConsumerState<AccountControlPage> {
                             Icons.arrow_forward_ios_rounded,
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                         ),
-                        ListTile(
+                        const ListTile(
                           leading: Icon(
                             Icons.add_alert_outlined,
                             color: Colors.pink,
@@ -196,25 +197,28 @@ class _AccountControlPageState extends ConsumerState<AccountControlPage> {
                             Icons.arrow_forward_ios_rounded,
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                         ),
-                        ListTile(
-                          leading: Icon(
-                            Icons.warning_amber_outlined,
-                            color: Colors.pink,
-                          ),
-                          title: Text(
-                            "Bize Ulaşın",
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios_rounded,
+                        InkWell(onTap: () {  Navigator.push(context, MaterialPageRoute(builder: (context) => const ContantUsPage(),));
+                        },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.warning_amber_outlined,
+                              color: Colors.pink,
+                            ),
+                            title: Text(
+                              "Bize Ulaşın",
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                            ),
                           ),
                         ),
-                        Divider(
+                        const Divider(
                           color: Colors.grey,
                         ),
-                        ListTile(
+                        const ListTile(
                           leading: Icon(
                             Icons.phone_android,
                             color: Colors.pink,

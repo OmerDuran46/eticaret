@@ -214,7 +214,6 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 width: double.infinity,
                 height: double.infinity,
                 child: ListView.builder(
-                  // reverse: true,
                   itemCount: searchCache.length,
                   itemBuilder: (context, index) {
 
@@ -227,6 +226,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                             children: [
                               InkWell(
                                   onTap: () {
+                                    debugPrint(box.get(index));
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
@@ -422,7 +422,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         );
       }
     } else {
-      return const Center(child: Text("Favori ürünü gelirken hata oluştu"));
+      return const Center(child: Text("Sorun oluştu"));
     }
   }
 }

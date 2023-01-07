@@ -30,7 +30,7 @@ class Datum {
         id: json["id"],
         title: json["title"],
         image: json["image"] == null ? null : Image.fromJson(json["image"]),
-        priceSell: json["price_sell"],
+    priceSell:json["price_sell"] is String?double.parse(json["price_sell"]):json["price_sell"],
       );
 }
 

@@ -8,7 +8,7 @@ import '../../../../core/models/delete_cart_item_model.dart';
 abstract class IGetCartInfoViewModel with ChangeNotifier{
   ApiResponse<GetCartModel> get getCartResponse;
   set getCartResponse(ApiResponse<GetCartModel> value);
-  Future<void> getCart(customerId,yeniToken);
+  Future<void> getCart(customerId);
 }
 abstract class IDeleteCartItemInfoViewModel with ChangeNotifier{
   ApiResponse<DeleteCartItemModel> get deleteCartItemResponse;

@@ -209,14 +209,11 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
         String customerName = iGetCusomerLoginViewModel.customerLoginResponse.data.data[0].name;
         String customerSurname = iGetCusomerLoginViewModel.customerLoginResponse.data.data[0].surname;
         var box = Hive.box("CustomerLoginHive");
-        box.clear();
         box.put("sifre", token);
         box.put("customerId", customerId);
         box.put("customerName", customerName);
         box.put("customerSurName", customerSurname);
-        for (var element in box.values) {
-          debugPrint(element.toString());
-        }
+
         return Fluttertoast.showToast(
                 msg: "Giriş Başarılı",
                 toastLength: Toast.LENGTH_SHORT,

@@ -9,7 +9,9 @@ import 'package:eticaret/ui/screens/homePage/search/search_page.dart';
 import '../../../../core/api/api_response.dart';
 import '../../../../main.dart';
 import '../../urun_detay/urun_detay_page.dart';
+import '../addToCart/i_search_info_view_model.dart';
 import '../i_get_home_page_info_view_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePages extends ConsumerStatefulWidget {
   const HomePages({
@@ -21,8 +23,6 @@ class HomePages extends ConsumerStatefulWidget {
 }
 
 class _HomePagesState extends ConsumerState<HomePages> {
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +56,8 @@ class _HomePagesState extends ConsumerState<HomePages> {
                     fillColor: Colors.grey.shade100,
                     enabled: false,
                     suffixIcon: const Icon(
-                      Icons.mic_none_outlined,color: Colors.black87,
+                      Icons.mic_none_outlined,
+                      color: Colors.black87,
                     ),
                     hintText: "Burada Ara",
                     hintStyle: const TextStyle(
@@ -71,7 +72,10 @@ class _HomePagesState extends ConsumerState<HomePages> {
                           ),
                         );
                       },
-                      child: const Icon(Icons.search,color: Colors.black87,),
+                      child: const Icon(
+                        Icons.search,
+                        color: Colors.black87,
+                      ),
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(40),
@@ -88,11 +92,15 @@ class _HomePagesState extends ConsumerState<HomePages> {
             width: 150,
           ),
           centerTitle: true),
-      body: home(ref.watch(iGetIndexInfoViewModel),),
+      body: home(
+        ref.watch(iGetIndexInfoViewModel),
+      ),
     );
   }
 
-  Widget home(IGetIndexInfoViewModel iGetIndexInfoViewModel,) {
+  Widget home(
+    IGetIndexInfoViewModel iGetIndexInfoViewModel,
+  ) {
     if (iGetIndexInfoViewModel.indexResponse.status == Status.loading) {
       return const Center(child: CupertinoActivityIndicator());
     } else if (iGetIndexInfoViewModel.indexResponse.status == Status.completed) {
@@ -103,7 +111,6 @@ class _HomePagesState extends ConsumerState<HomePages> {
       var banner2 = iGetIndexInfoViewModel.indexResponse.data.data!.list[4].options;
       var banner3 = iGetIndexInfoViewModel.indexResponse.data.data!.list[5].options;
       var banner4 = iGetIndexInfoViewModel.indexResponse.data.data!.list[6].options;
-
 
       return ListView(
         children: [
@@ -117,7 +124,6 @@ class _HomePagesState extends ConsumerState<HomePages> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: () {
-
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -176,10 +182,7 @@ class _HomePagesState extends ConsumerState<HomePages> {
               scrollDirection: Axis.horizontal,
               itemCount: sliderUrunBilgi.length,
               itemBuilder: (BuildContext context, int index) {
-                var stok = sliderUrunBilgi[index].stock;
-
                 var productId = sliderUrunBilgi[index].id;
-                var productCount = "1";
                 return InkWell(
                   onTap: () {
                     Navigator.push(
@@ -204,53 +207,17 @@ class _HomePagesState extends ConsumerState<HomePages> {
                             ),
                             child: sliderUrun(
                               sliderUrunBilgi[index].image,
-                              sliderUrunBilgi[index].price_sell.toString(),
+                              sliderUrunBilgi[index].name.toString(),
                             ),
                           ),
                           const SizedBox(
-                            height: 5,
+                            height: 20,
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (stok == "0") {
-                                Fluttertoast.showToast(
-                                    msg: "Stokta yok.",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              } else {
-                                addToCart(
-                                  productCount: productCount,
-                                  productId: productId,
-                                  variantId:productId,
-                                );
 
-                                Fluttertoast.showToast(
-                                    msg: "Sepete eklendi.",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.green,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
-                              }
-                            },
-                            child: SizedBox(
-                              width: (MediaQuery.of(context).size.width - 50) / 4,
-                              height: 20,
-                              child: const Center(
-                                child: Text(
-                                  "Sepete Ekle",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          Text(
+                            ("${double.parse((sliderUrunBilgi[index].price_sell * (1 + 18 / 100)).toStringAsFixed(2))}  TL"),
+                            style: GoogleFonts.poppins(color: Colors.red)
+
                           ),
                         ],
                       ),
@@ -265,15 +232,30 @@ class _HomePagesState extends ConsumerState<HomePages> {
           ),
           Column(
             children: [
-              SizedBox(width: double.infinity, height: 250, child: Image(image: CachedNetworkImageProvider(banner1[0].image), fit: BoxFit.fill, height: 250)),
+              SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: Image(image: CachedNetworkImageProvider(banner1[0].image), fit: BoxFit.fill, height: 250)),
               const SizedBox(height: 5),
-              SizedBox(width: double.infinity, height: 250, child: Image(image: CachedNetworkImageProvider(banner2[0].image), fit: BoxFit.fill, height: 250)),
+              SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: Image(image: CachedNetworkImageProvider(banner2[0].image), fit: BoxFit.fill, height: 250)),
               const SizedBox(height: 5),
-              SizedBox(width: double.infinity, height: 250, child: Image(image: CachedNetworkImageProvider(banner3[0].image), fit: BoxFit.fill, height: 250)),
+              SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: Image(image: CachedNetworkImageProvider(banner3[0].image), fit: BoxFit.fill, height: 250)),
               const SizedBox(height: 5),
-              SizedBox(width: double.infinity, height: 250, child: Image(image: CachedNetworkImageProvider(banner4[0].image), fit: BoxFit.fill, height: 250)),
+              SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: Image(image: CachedNetworkImageProvider(banner4[0].image), fit: BoxFit.fill, height: 250)),
               const SizedBox(height: 5),
-              SizedBox(width: double.infinity, height: 250, child: Image(image: CachedNetworkImageProvider(banner1[0].image), fit: BoxFit.fill, height: 250)),
+              SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: Image(image: CachedNetworkImageProvider(banner1[0].image), fit: BoxFit.fill, height: 250)),
             ],
           ),
         ],
@@ -287,11 +269,18 @@ class _HomePagesState extends ConsumerState<HomePages> {
     }
   }
 
-  addToCart({required productCount, required productId,required variantId}) {
-    ref.read(iGetAddToCartInfoViewModel).addToCard(productCount, productId,variantId);
+  addToCart({
+    productCount,
+    productId,
+  }) async {
+    await ref.watch(iGetAddToCartInfoViewModel).addToCard(productCount, productId, "");
   }
 
-  sliderUrun(String sliderUrunImage, String urunFiyat) {
+  gelenMesaj(IGetAddToCartInfoViewModel iGetAddToCartInfoViewModel) {
+    return iGetAddToCartInfoViewModel.addToCartResponse.data.message[0].text[0].toString();
+  }
+
+  sliderUrun(String sliderUrunImage, String procutName) {
     return Column(
       children: [
         Stack(
@@ -313,23 +302,26 @@ class _HomePagesState extends ConsumerState<HomePages> {
         const SizedBox(
           height: 10,
         ),
-        SizedBox(
-          width: 60,
+        Container(
+          width: 100,
           height: 35,
           child: Center(
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
+                Container(
+                  width: double.infinity,
                   child: Text(
-                    "$urunFiyat TL",
+                    procutName,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
                       fontSize: 14,
                       color: Colors.black,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.clip,
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
@@ -399,10 +391,10 @@ class _HomePagesState extends ConsumerState<HomePages> {
         )
       ],
     );
+
   }
 
   getIndex() {
     ref.read(iGetIndexInfoViewModel).getIndex();
   }
-
 }

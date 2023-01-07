@@ -28,8 +28,7 @@ class _GetFavoriInfoPageState extends ConsumerState<GetFavoriInfoPage> {
         child: CupertinoActivityIndicator(),
       );
     } else if (iGetFavoriInfoViewModel.favoriResponse.status == Status.completed) {
-      String customerToken=Constants.customerKey;
-      if(customerToken.isEmpty){
+      if(loginControl=="false"){
       return const LoginControlPage();
       }else{
         var favoriList = iGetFavoriInfoViewModel.favoriResponse.data;
@@ -221,13 +220,14 @@ class _GetFavoriInfoPageState extends ConsumerState<GetFavoriInfoPage> {
   var secilenindex = 0;
   var variant2index = 0;
   String variantId="";
-
+  String loginControl="false";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getfavori();
     getCustomer();
+     loginControl=Constants.parolaGetir();
   }
   gelenMesaj(IGetAddToCartInfoViewModel iGetAddToCartInfoViewModel) {
     return  iGetAddToCartInfoViewModel.addToCartResponse.data.message[0].text[0].toString();

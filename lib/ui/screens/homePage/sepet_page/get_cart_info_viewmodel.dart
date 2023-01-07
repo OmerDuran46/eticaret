@@ -25,9 +25,9 @@ class getCartInfoViewModel with ChangeNotifier implements IGetCartInfoViewModel 
   }
 
   @override
-  Future<void> getCart(customerId,yeniToken) async {
+  Future<void> getCart(customerId) async {
     try {
-      final result = await locator<Api>().getCart(customerId,yeniToken);
+      final result = await locator<Api>().getCart(customerId);
       getCartResponse = ApiResponse.completed(result);
     } catch (e) {
       getCartResponse = ApiResponse.error(e.toString());

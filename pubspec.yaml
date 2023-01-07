@@ -47,6 +47,7 @@ dependencies:
   share_plus:
   hive:
   hive_flutter:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:

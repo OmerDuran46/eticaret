@@ -24,7 +24,6 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   PageController pageController = PageController();
   String? customerId;
-
   int _selectedIndex = 0;
 
   void onTapped(int index) {
@@ -38,14 +37,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCustomer();
-
-    getfavori();
-    getCustomer();
-
     var box = Hive.box("CustomerLoginHive");
     customerId = box.get("customerId");
-    debugPrint(customerId);
   }
 
   @override
@@ -63,91 +56,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     // TODO: implement dispose
     super.dispose();
   }
-
-  Widget getCartWidget(IGetCartInfoViewModel iGetCartInfoViewModel) {
-    if (iGetCartInfoViewModel.getCartResponse.status == Status.loading) {
-      return const Center(
-        child: CupertinoActivityIndicator(),
-      );
-    } else if (iGetCartInfoViewModel.getCartResponse.status == Status.completed) {
-      var product = iGetCartInfoViewModel.getCartResponse.data.data!.products;
-
-      return Container(
-        color: Colors.grey.shade100,
-        padding: const EdgeInsets.all(5),
-        height: 500,
-        child: ListView.builder(
-          itemCount: product!.length,
-          padding: const EdgeInsets.all(1),
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.all(5),
-              child: Material(
-                elevation: 1,
-                shadowColor: Colors.white70,
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  color: Colors.white10,
-                  padding: const EdgeInsets.all(5),
-                  margin: const EdgeInsets.all(5),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 10),
-                        height: 100,
-                        child: ListTile(
-                          title: Text(product[index].title),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(product[index].variantName),
-                              Text(
-                                "${product[index].priceSell} TL",
-                                style: const TextStyle(color: Colors.red, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          leading: Container(
-                            width: 75,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: CachedNetworkImageProvider(
-                                product[index].image!.small,
-                              )),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Divider(
-                        endIndent: 10,
-                        indent: 10,
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Icon(Icons.delete),
-                            Icon(Icons.delete),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
-      );
-    } else {
-      return const Center(child: Text("Sepet sayfası yüklenirken hata oluştu!"));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,16 +84,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
     );
   }
-
   applicationLogin() {
     ref.read(iGetIndexInfoViewModel).getIndex();
   }
 
-  getfavori() {
-    ref.read(iGetFavoriInfoViewModel).getFavori();
-  }
-
-  getCustomer() {
-    ref.read(iGetCustomerInfoViewModel).getCustomer();
-  }
 }

@@ -875,8 +875,5 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
   gelenMesaj(IGetAddToCartInfoViewModel iGetAddToCartInfoViewModel) {
     return  iGetAddToCartInfoViewModel.addToCartResponse.data.message[0].text[0].toString();
   }
-  yeniToken(IGetApplicationLoginViewModel iGetApplicationLoginViewModel) {
-    Constants.getApplicationToken(iGetApplicationLoginViewModel);
-  }
 
 }
