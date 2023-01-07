@@ -7,6 +7,8 @@ import 'package:eticaret/main.dart';
 import 'package:eticaret/ui/screens/homePage/home.dart';
 
 import '../../../core/api/api_response.dart';
+import '../homePage/account/account__setting_pages/update_password.dart';
+import '../member_registration/member_registration_page.dart';
 import 'i_get_log_info_view_model.dart';
 
 class CustomerLogin extends ConsumerStatefulWidget {
@@ -21,6 +23,7 @@ class CustomerLogin extends ConsumerStatefulWidget {
 class _CustomerLoginState extends ConsumerState<CustomerLogin> {
   TextEditingController _eposta = TextEditingController();
   TextEditingController _sifre = TextEditingController();
+  bool sifreGizle = true;
 
   @override
   void initState() {
@@ -28,7 +31,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
     super.initState();
 
     _eposta = TextEditingController(text: "omer.duran@tsoft.com.tr");
-    _sifre = TextEditingController(text: "Omer.456");
+    _sifre = TextEditingController(text: "Omer85241");
   }
 
   @override
@@ -96,11 +99,23 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                   ),
                   TextField(
                     controller: _sifre,
+                    obscureText: sifreGizle,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      suffixIcon: const Icon(
-                        Icons.remove_red_eye_outlined,
+                      suffixIcon:  InkWell(onTap: () {
+                        setState(() {
+                          if(sifreGizle==true){
+
+                            sifreGizle=false;
+                          }else{
+                            sifreGizle=true;
+                          }
+                        });
+                      },
+                        child: const Icon(
+                          Icons.remove_red_eye_outlined,
+                        ),
                       ),
                       hintText: "Şifre",
                       enabledBorder: OutlineInputBorder(
@@ -149,7 +164,9 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePasswordPage(),));
+                        },
                         child: const Text("Şifremi unuttum"),
                       ),
                     ],
@@ -171,7 +188,9 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                           width: 10,
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => MemberRegistrationPage(),));
+                          },
                           child: const Text(
                             "Kayıt Ol",
                             style: TextStyle(

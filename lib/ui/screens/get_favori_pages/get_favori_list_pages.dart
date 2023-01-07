@@ -171,7 +171,7 @@ class _GetFavoriInfoPageState extends ConsumerState<GetFavoriInfoPage> {
                                         Fluttertoast.showToast(
                                             msg: gelenMesaj(ref.watch(iGetAddToCartInfoViewModel)),
                                             toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
+                                            gravity: ToastGravity.BOTTOM,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.green,
                                             textColor: Colors.white,
