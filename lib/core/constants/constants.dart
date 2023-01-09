@@ -23,5 +23,5 @@ class Constants{
  }
   static String tKey=applicationTokenGet();
   static String customerKey=parolaGetir();
-  static String tDomain="http://omerduran.1ticaret.com/";
+  static String tDomain="";
 }
