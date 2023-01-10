@@ -11,9 +11,7 @@ import 'package:eticaret/ui/screens/get_favori_pages/i_get_favori_info_view_mode
 import 'package:eticaret/ui/screens/urun_detay/getAciklamaPage/urun_aciklama_page.dart';
 import 'package:eticaret/ui/screens/urun_detay/i_get_urun_details_page_info_view_model.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../../../core/api/api_response.dart';
-import '../../splash/splash.dart';
 import '../get_product_list/i_get_product_info_view_model.dart';
 
 class UrunDetayPage extends ConsumerStatefulWidget {
@@ -67,6 +65,7 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
     ref.read(iGetProductInfoViewModel).productFindResponse.status = Status.loading;
     ref.read(iAddFavoriInfoViewModel).addFavoriResponse.status = Status.loading;
     ref.read(iGetDeleteFavoriInfoViewModel).deleteFavoriResponse.status = Status.loading;
+    ref.read(iGetAddToCartInfoViewModel).addToCartResponse.status = Status.loading;
   }
 
   void _onShare(BuildContext context, String link) async {
@@ -222,16 +221,20 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
                           InkWell(
                             onTap: () {
                               if (favoriEkli == false) {
-                                ref.watch(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
+                                addFavorite().then((value) {
+                                  setState(() {});
+                                  getfavori1();
+                                  Navigator.pop(context);
+                                });
+                                // ref.watch(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
 
-                                setState(() {});
-                                getfavori1();
                               }
                               if (favoriEkli == true) {
-                                ref.watch(iGetDeleteFavoriInfoViewModel).deleteFavori(widget.urunId);
-
-                                setState(() {});
-                                getfavori1();
+                                deleteFavori().then((value) {
+                                  setState(() {});
+                                  getfavori1();
+                                  Navigator.pop(context);
+                                });
                               }
                             },
                             child: Column(
@@ -801,7 +804,6 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
                       fontSize: 16.0);
                 } else {
                   addToCart(productCount: dropdownValueAdet, productId: widget.urunId, variantId: secilenTypeIdB).then((value) {
-
                     Fluttertoast.showToast(
                         msg: gelenMesaj(ref.watch(iGetAddToCartInfoViewModel)),
                         toastLength: Toast.LENGTH_SHORT,
@@ -810,6 +812,7 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
                         backgroundColor: Colors.green,
                         textColor: Colors.white,
                         fontSize: 16.0);
+                    Navigator.pop(context);
                   });
                 }
               },
@@ -843,8 +846,9 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
     ref.read(iGetUrunDetailsInfoViewModel).getProductDetails(widget.urunId);
   }
 
-  addFavorite() {
-    ref.read(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
+  addFavorite() async {
+    Constants().loading(context);
+    await ref.read(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
   }
 
   getfavori() {
@@ -855,13 +859,14 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
     ref.watch(iGetFavoriInfoViewModel).getFavori();
   }
 
-  deleteFavori() {
-    ref.watch(iGetDeleteFavoriInfoViewModel).deleteFavori(widget.urunId);
+  deleteFavori() async {
+    Constants().loading(context);
+    await ref.watch(iGetDeleteFavoriInfoViewModel).deleteFavori(widget.urunId);
   }
 
   addToCart({productCount, productId, variantId}) async {
+    Constants().loading(context);
     await ref.watch(iGetAddToCartInfoViewModel).addToCard(productCount, productId, variantId);
-
   }
 
   urunfiyati(String fiyat) {
@@ -873,7 +878,6 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
   }
 
   gelenMesaj(IGetAddToCartInfoViewModel iGetAddToCartInfoViewModel) {
-    return  iGetAddToCartInfoViewModel.addToCartResponse.data.message[0].text[0].toString();
+    return iGetAddToCartInfoViewModel.addToCartResponse.data.message[0].text[0].toString();
   }
-
 }

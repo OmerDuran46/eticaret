@@ -177,6 +177,7 @@ class _GetFavoriInfoPageState extends ConsumerState<GetFavoriInfoPage> {
                                             textColor: Colors.white,
                                             fontSize: 16.0);
                                         variantId="";
+                                        Navigator.pop(context);
                                       });
                                     }, child: const Text("Sepete Ekle"))
                                   ],
@@ -255,6 +256,7 @@ class _GetFavoriInfoPageState extends ConsumerState<GetFavoriInfoPage> {
     );
   }
   addToCart({productCount, productId, variantId}) async {
+    Constants().loading(context);
     await ref.watch(iGetAddToCartInfoViewModel).addToCard(productCount, productId, variantId);
 
   }

@@ -131,6 +131,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 
   deleteCartItem(productId, variantId) async {
+    Constants().loading(context);
     await ref.watch(iDeleteCartItemInfoViewModel).deleteCartItem(productId, variantId);
   }
 
@@ -227,6 +228,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                           fontSize: 16.0);
                                       getApplicationToken(iGetApplicationLoginViewModel).then((value){
                                         getCart2();
+                                        Navigator.pop(context);
                                       });
 
 
@@ -251,6 +253,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                         );
                                         getApplicationToken(iGetApplicationLoginViewModel).then((value){
                                           getCart2();
+                                          Navigator.pop(context);
                                         });
 
                                       },
@@ -270,7 +273,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                                                 variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
                                                 productCount: oAnkiCount,
                                                 productId: oAnkiProductId).then((value){
+
                                               getCart2();
+                                              Navigator.pop(context);
                                             });
 
                                           });
@@ -298,6 +303,7 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 
   addToCart({productCount, productId, variantId}) async {
+    Constants().loading(context);
     await ref.watch(iGetAddToCartInfoViewModel).addToCard(productCount, productId, variantId);
 
   }
