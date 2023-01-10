@@ -1,3 +1,4 @@
+import 'package:eticaret/core/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -211,6 +212,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
   }
 
   customerLogin(eposta, sifre) async {
+    Constants().loading(context);
     await ref.read(iGetCustomerLoginInfoViewModel).customerLogin(eposta, sifre);
   }
 
@@ -256,7 +258,8 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
             textColor: Colors.white,
-            fontSize: 16.0);
+            fontSize: 16.0).then((value) => Navigator.pop(context));
+        
       }
     } else {
       return const Center(

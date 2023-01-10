@@ -85,6 +85,7 @@ final iGetPriceAlarmInfoViewModel=ChangeNotifierProvider<IGetPriceAlarmInfoViewM
 final iGetStockAlarmInfoViewModel=ChangeNotifierProvider<IGetStockAlarmInfoViewModel>((ref) => getStockAlarmInfoViewModel());
 final iDeleteAlarmInfoViewModel=ChangeNotifierProvider<IDeleteAlarmInfoViewModel>((ref) => deleteAlarmInfoViewModel());
 final iCreateCustomerInfoViewModel=ChangeNotifierProvider<ICreateCustomerInfoViewModel>((ref) => createCustomerInfoViewModel());
+final iCustomerLoginWebInfoViewModel=ChangeNotifierProvider<ICustomerLoginWebInfoViewModel>((ref) => customerLoginWebInfoViewModel());
 
 
 class MyApp extends StatelessWidget {

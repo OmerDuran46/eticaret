@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:eticaret/core/models/create_customer_model.dart';
 import 'package:eticaret/core/models/delete_alarm_model.dart';
 import 'package:eticaret/core/models/get_price_alarm_model.dart';
 import 'package:eticaret/core/models/get_stock_alarm_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:eticaret/core/models/add_favori_model.dart';
 import 'package:eticaret/core/models/applicationLogin.dart';
@@ -22,6 +24,7 @@ import '../../locator.dart';
 import '../constants/constants.dart';
 import '../constants/endpoint.dart';
 import '../models/addToCart_model.dart';
+import '../models/customer_login_web_model.dart';
 import '../models/delete_cart_item_model.dart';
 import '../models/get_customer_model.dart';
 import '../models/search_model.dart';
@@ -167,11 +170,7 @@ class Api {
 
   Future<GetCartModel> getCart(customerId) async {
     var url = "${Constants.tDomain}${Endpoints.getCart}$customerId";
-    Map<String, dynamic> body = {
-      "token": Constants.applicationTokenGet(),
-      "new": "true",
-      "fetch_installment_list":"true"
-    };
+    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "new": "true", "fetch_installment_list": "true"};
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return GetCartModel.fromJson(response);
@@ -230,7 +229,7 @@ class Api {
     return UpdateCustomerModel.fromJson(response);
   }
 
-  Future<DeleteCartItemModel> deleteCartItem(productId,variantId) async {
+  Future<DeleteCartItemModel> deleteCartItem(productId, variantId) async {
     var url = Constants.tDomain + Endpoints.deleteCartIndex;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
@@ -243,6 +242,7 @@ class Api {
 
     return DeleteCartItemModel.fromJson(response);
   }
+
   Future<GetPriceAlarmModel> getPriceAlarm() async {
     var url = Constants.tDomain + Endpoints.getPriceAlarm;
     Map<String, dynamic> body = {
@@ -255,6 +255,7 @@ class Api {
 
     return GetPriceAlarmModel.fromJson(response);
   }
+
   Future<StockAlarmModel> getStockAlarm() async {
     var url = Constants.tDomain + Endpoints.getPriceAlarm;
     Map<String, dynamic> body = {
@@ -267,8 +268,9 @@ class Api {
 
     return StockAlarmModel.fromJson(response);
   }
+
   Future<DeleteAlarmModel> deleteAlarm(alarmId) async {
-    var url = Constants.tDomain + Endpoints.deleteAlarm+alarmId;
+    var url = Constants.tDomain + Endpoints.deleteAlarm + alarmId;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
       "MobileToken": Constants.parolaGetir(),
@@ -277,24 +279,49 @@ class Api {
 
     return DeleteAlarmModel.fromJson(response);
   }
-  Future<CreateCustomerModel> createCustomer(name,surname,email,password,phone,isEmailNotificationOn,isSmsNotificationOn,isPhoneCallNotificationOn) async {
+
+  Future<CreateCustomerModel> createCustomer(
+      name, surname, email, password, phone, isEmailNotificationOn, isSmsNotificationOn, isPhoneCallNotificationOn) async {
     var url = Constants.tDomain + Endpoints.createCustomer;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
       "data": jsonEncode([
-        { "Name": name,
+        {
+          "Name": name,
           "Surname": surname,
           "Email": email,
           "Password": password,
           "Phone": phone,
           "IsEmailNotificationOn": isEmailNotificationOn,
           "IsSmsNotificationOn": isSmsNotificationOn,
-          "IsPhoneCallNotificationOn": isPhoneCallNotificationOn,}
+          "IsPhoneCallNotificationOn": isPhoneCallNotificationOn,
+        }
       ])
-
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return CreateCustomerModel.fromJson(response);
+  }
+
+  Future<CustomerLoginWebModel> customerLoginWeb() async {
+    var url = Constants.tDomain + Endpoints.customerLoginWeb;
+
+    Map<String, dynamic> body = {
+      "token": Constants.tKey,
+      "customerId": Constants.getCustomerId(),
+      "MobileToken": Constants.customerKey,
+      "currency": "TL",
+      "language": "tr",
+      "loginRedirectUrl": Platform.isIOS
+          ? "order?isFromiOSApp=true&returnParameter=TSoftShopperURLScheme&platform=ios&token="
+          : "order?isFromiOSApp=true&returnParameter=exitAndroidWebview&platform=android&token="
+    };
+
+    var response = await _apiBaseHelper.post(
+      url: url,
+      body: body,
+    );
+
+    return CustomerLoginWebModel.fromJson(response);
   }
 }

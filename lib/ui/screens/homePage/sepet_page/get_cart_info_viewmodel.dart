@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:eticaret/core/models/customer_login_web_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:eticaret/core/api/api.dart';
 import 'package:eticaret/core/api/api_response.dart';
@@ -61,4 +62,30 @@ class deleteCartItemInfoViewModel with ChangeNotifier implements IDeleteCartItem
   }
 
 }
+class customerLoginWebInfoViewModel with ChangeNotifier implements ICustomerLoginWebInfoViewModel {
+  ApiResponse<CustomerLoginWebModel> _customerLoginWebResponse = ApiResponse.loading(
+      "loading");
+
+  @override
+  ApiResponse<CustomerLoginWebModel> get customerLoginWebResponse =>
+      _customerLoginWebResponse;
+
+  @override
+  set customerLoginWebResponse(ApiResponse<CustomerLoginWebModel> value) {
+    _customerLoginWebResponse = value;
+    notifyListeners();
+  }
+
+  @override
+  Future<void> customerLoginWeb() async {
+    try {
+      final result = await locator<Api>().customerLoginWeb();
+      customerLoginWebResponse = ApiResponse.completed(result);
+    } catch (e) {
+      customerLoginWebResponse = ApiResponse.error(e.toString());
+    }
+  }
+
+}
+
 

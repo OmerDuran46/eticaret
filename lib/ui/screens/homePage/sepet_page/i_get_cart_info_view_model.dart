@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:eticaret/core/api/api_response.dart';
 import 'package:eticaret/core/models/get_cart_model.dart';
 
+import '../../../../core/models/customer_login_web_model.dart';
 import '../../../../core/models/delete_cart_item_model.dart';
 
 
@@ -14,4 +15,9 @@ abstract class IDeleteCartItemInfoViewModel with ChangeNotifier{
   ApiResponse<DeleteCartItemModel> get deleteCartItemResponse;
   set deleteCartItemResponse(ApiResponse<DeleteCartItemModel> value);
   Future<void> deleteCartItem(productId,variantId);
+}
+abstract class ICustomerLoginWebInfoViewModel with ChangeNotifier{
+  ApiResponse<CustomerLoginWebModel> get customerLoginWebResponse;
+  set customerLoginWebResponse(ApiResponse<CustomerLoginWebModel> value);
+  Future<void> customerLoginWeb();
 }
