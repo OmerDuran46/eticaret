@@ -5,7 +5,6 @@ import 'package:eticaret/core/models/create_customer_model.dart';
 import 'package:eticaret/core/models/delete_alarm_model.dart';
 import 'package:eticaret/core/models/get_price_alarm_model.dart';
 import 'package:eticaret/core/models/get_stock_alarm_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:eticaret/core/models/add_favori_model.dart';
 import 'package:eticaret/core/models/applicationLogin.dart';
@@ -287,6 +286,7 @@ class Api {
       "token": Constants.applicationTokenGet(),
       "data": jsonEncode([
         {
+          "CustomerGroupCode": "TZ0",
           "Name": name,
           "Surname": surname,
           "Email": email,

@@ -383,19 +383,27 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
         bilgilendirmeSms.toString(),
         bilgilendirmeTelefonArama.toString());
   }
+  getCustomer() async {
+   await ref.read(iGetCustomerInfoViewModel).getCustomer();
+  }
 
   gelenCevap()  {
     var box = Hive.box("CustomerLoginHive");
-    String customerId = ref.read(iCreateCustomerInfoViewModel).createCustomerResponse.data.data[0].customerId;
-    String mobileToken = ref.read(iCreateCustomerInfoViewModel).createCustomerResponse.data.data[0].mobileToken;
-    String customerName = ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].name;
-    String customerSurName= ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].surname;
-    box.clear();
+    var uye=ref.read(iCreateCustomerInfoViewModel).createCustomerResponse.data.data[0];
+    String customerId = uye.customerId;
+    String mobileToken = uye.mobileToken;
     box.put("sifre", mobileToken);
     box.put("customerId", customerId);
-    box.put("customerName", customerName);
-    box.put("customerSurName", customerSurName);
-    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage(),), (route) => false);
+    getCustomer().then((value){
+      String customerName = ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].name;
+      String customerSurName= ref.read(iGetCustomerInfoViewModel).getcustomerResponse.data.data![0].surname;
+
+      box.put("customerName", customerName);
+      box.put("customerSurName", customerSurName);
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage(),), (route) => false);
+    });
+
+
 
   }
 }
