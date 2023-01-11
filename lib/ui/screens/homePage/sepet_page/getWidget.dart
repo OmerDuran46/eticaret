@@ -254,6 +254,30 @@ class _CartPageState extends ConsumerState<CartPage> {
                                 children: [
                                   InkWell(
                                       onTap: () {
+                                        int oAnkiCount = product[index].count - 1;
+                                        String oAnkiProductId = product[index].id;
+                                        int oAnkiVariantId = product[index].variantId;
+                                        deleteCartItem(product[index].id, product[index].variantId == 0 ? "" : product[index].variantId)
+                                            .then((value) {
+                                          getApplicationToken(iGetApplicationLoginViewModel).then((value) {
+                                            addToCart(
+                                                variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
+                                                productCount: oAnkiCount,
+                                                productId: oAnkiProductId)
+                                                .then((value) {
+                                              getCart2();
+                                              Navigator.pop(context);
+                                            });
+                                          });
+                                        });
+                                      },
+                                      child: const Icon(Icons.remove)),
+
+                                  Text(
+                                    "  ${product[index].count} Adet  ",
+                                  ),
+                                  InkWell(
+                                      onTap: () {
                                         addToCart(
                                           variantId: product[index].variantId == 0 ? "" : product[index].variantId,
                                           productCount: 1,
@@ -265,29 +289,6 @@ class _CartPageState extends ConsumerState<CartPage> {
                                         });
                                       },
                                       child: const Icon(Icons.add)),
-                                  Text(
-                                    "  ${product[index].count} Adet  ",
-                                  ),
-                                  InkWell(
-                                      onTap: () {
-                                        int oAnkiCount = product[index].count - 1;
-                                        String oAnkiProductId = product[index].id;
-                                        int oAnkiVariantId = product[index].variantId;
-                                        deleteCartItem(product[index].id, product[index].variantId == 0 ? "" : product[index].variantId)
-                                            .then((value) {
-                                          getApplicationToken(iGetApplicationLoginViewModel).then((value) {
-                                            addToCart(
-                                                    variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
-                                                    productCount: oAnkiCount,
-                                                    productId: oAnkiProductId)
-                                                .then((value) {
-                                              getCart2();
-                                              Navigator.pop(context);
-                                            });
-                                          });
-                                        });
-                                      },
-                                      child: const Icon(Icons.remove))
                                 ],
                               ),
                             ],
