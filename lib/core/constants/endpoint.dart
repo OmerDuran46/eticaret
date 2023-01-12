@@ -22,4 +22,5 @@ class Endpoints{
   static String getPriceAlarm="rest1/mobile/getAlarmList";
   static String deleteAlarm="rest1/mobile/deleteAlarm/";
   static String createCustomer="rest1/customer/addCustomers";
+  static String customerLoginWeb="rest1/customer/login";
 }
