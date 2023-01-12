@@ -37,9 +37,9 @@ class Api {
   var client = http.Client();
 
   Future<ApplicationModel> applicationLogin() async {
-    var url = "${Constants.tDomain}${Endpoints.applicationLogin}";
+    var url = "${Constants.tDomain}${Endpoints.applicationLogin}omer";
     Map<String, dynamic> body = {
-      "pass": "",
+      "pass": "Omer.456+",
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
