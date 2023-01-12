@@ -166,7 +166,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                     children: [
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePasswordPage(),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const UpdatePasswordPage(),));
                         },
                         child: const Text("Şifremi unuttum"),
                       ),
@@ -190,7 +190,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                         ),
                         InkWell(
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MemberRegistrationPage(),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const MemberRegistrationPage(),));
                           },
                           child: const Text(
                             "Kayıt Ol",

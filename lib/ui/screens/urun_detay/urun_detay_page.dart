@@ -756,13 +756,18 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
         actions: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Icon(Icons.share),
-              SizedBox(
+            children: [
+              const Icon(Icons.share),
+              const SizedBox(
                 width: 10,
               ),
-              Icon(Icons.favorite_border),
-              SizedBox(
+              favoriEkli == false
+                  ? const Icon(Icons.favorite,
+                  color: Colors.red,)
+                  : const Icon(
+                  Icons.favorite_border
+                    ),
+              const SizedBox(
                 width: 10,
               ),
             ],

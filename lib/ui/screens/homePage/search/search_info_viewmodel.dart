@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/cupertino.dart';
 import 'package:eticaret/core/api/api.dart';
 import 'package:eticaret/core/api/api_response.dart';

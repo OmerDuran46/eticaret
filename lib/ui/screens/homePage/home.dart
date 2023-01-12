@@ -1,12 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:eticaret/ui/screens/homePage/account/account_page.dart';
 import 'package:eticaret/ui/screens/homePage/categoriTree/categori_tree_page.dart';
 import 'package:eticaret/ui/screens/homePage/home_page/home_page.dart';
-import 'package:eticaret/ui/screens/homePage/sepet_page/i_get_cart_info_view_model.dart';
 import 'package:eticaret/ui/screens/homePage/sepet_page/getWidget.dart';
 import '../../../core/api/api_response.dart';
 import '../../../main.dart';

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:eticaret/ui/screens/homePage/account/login_control_page/login_control_pages.dart';
 import 'package:eticaret/ui/screens/homePage/product_list_page/product_list_pages.dart';
 import 'package:eticaret/ui/screens/homePage/search/search_page.dart';
@@ -302,13 +301,13 @@ class _HomePagesState extends ConsumerState<HomePages> {
         const SizedBox(
           height: 10,
         ),
-        Container(
+        SizedBox(
           width: 100,
           height: 35,
           child: Center(
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
                     procutName,

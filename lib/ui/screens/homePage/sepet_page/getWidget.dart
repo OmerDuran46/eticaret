@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eticaret/core/constants/constants.dart';
