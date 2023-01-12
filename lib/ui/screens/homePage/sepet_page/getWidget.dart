@@ -130,9 +130,6 @@ class _CartPageState extends ConsumerState<CartPage> {
   getCart() {
     ref.read(iGetCartInfoViewModel).getCart(widget.customerId);
   }
-  getCart3() {
-    ref.read(iGetCartInfoViewModel).getCart(widget.customerId);
-  }
 
   getCart2() {
     ref.watch(iGetCartInfoViewModel).getCart(widget.customerId);
