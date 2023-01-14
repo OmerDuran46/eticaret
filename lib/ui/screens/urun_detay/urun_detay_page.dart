@@ -222,18 +222,23 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
                             onTap: () {
                               if (favoriEkli == false) {
                                 addFavorite().then((value) {
-                                  setState(() {});
-                                  getfavori1();
-                                  Navigator.pop(context);
+                                  setState(() {
+                                    getfavori1();
+
+                                    debugPrint(favoriEkli.toString());
+                                    Navigator.pop(context);
+                                  });
                                 });
                                 // ref.watch(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
 
                               }
                               if (favoriEkli == true) {
                                 deleteFavori().then((value) {
-                                  setState(() {});
-                                  getfavori1();
-                                  Navigator.pop(context);
+                                  setState(() {
+                                    getfavori1();
+                                    debugPrint(favoriEkli.toString());
+                                    Navigator.pop(context);
+                                  });
                                 });
                               }
                             },
@@ -761,12 +766,7 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
               const SizedBox(
                 width: 10,
               ),
-              favoriEkli == false
-                  ? const Icon(Icons.favorite,
-                  color: Colors.red,)
-                  : const Icon(
-                  Icons.favorite_border
-                    ),
+              favoriListWidget(ref.read(iGetFavoriInfoViewModel)),
               const SizedBox(
                 width: 10,
               ),
@@ -853,7 +853,7 @@ class _UrunDetayPageState extends ConsumerState<UrunDetayPage> {
 
   addFavorite() async {
     Constants().loading(context);
-    await ref.read(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
+    await ref.watch(iAddFavoriInfoViewModel).addFavorite(widget.urunId);
   }
 
   getfavori() {

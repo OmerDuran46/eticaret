@@ -5,11 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/api/api_response.dart';
 import '../../../../main.dart';
 import '../../urun_detay/urun_detay_page.dart';
+import '../search/search_page.dart';
 import 'i_product_list_info_view_model.dart';
 
 class ProductListPage extends ConsumerStatefulWidget {
   final String categoriId;
-  const ProductListPage(this.categoriId, {
+
+  const ProductListPage(
+    this.categoriId, {
     Key? key,
   }) : super(key: key);
 
@@ -18,13 +21,11 @@ class ProductListPage extends ConsumerStatefulWidget {
 }
 
 class _ProductListPageState extends ConsumerState<ProductListPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getProductFindCategori();
-
   }
 
   @override
@@ -34,13 +35,78 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     ref.read(iGetProductListInfoViewModel).productListResponse.status = Status.loading;
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.pink,
+            )),
+        backgroundColor: Colors.white,
+        actions: [
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPage(),
+                ),
+              );
+            },
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              margin: const EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width - 40,
+              height: 50,
+              child: TextFormField(
+                autofocus: false,
+                decoration: InputDecoration(
+                  disabledBorder:
+                      OutlineInputBorder(borderSide: const BorderSide(color: Colors.transparent), borderRadius: BorderRadius.circular(20)),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  enabled: false,
+                  suffixIcon: const Icon(
+                    Icons.mic_none_outlined,
+                    color: Colors.black87,
+                  ),
+                  hintText: "Burada Ara",
+                  hintStyle: const TextStyle(
+                    fontSize: 13,
+                  ),
+                  prefixIcon: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SearchPage(),
+                        ),
+                      );
+                    },
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
       body: productListWidget(ref.watch(iGetProductListInfoViewModel)),
     );
   }
+
   getProductFindCategori() {
     ref.read(iGetProductListInfoViewModel).getProductFindCategori(widget.categoriId);
   }
@@ -52,9 +118,138 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       );
     } else if (iGetProductListInfoViewModel.productListResponse.status == Status.completed) {
       var getProductFind = iGetProductListInfoViewModel.productListResponse.data;
-
+      String? secilenSiralama = "0";
       return Column(
         children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.all(10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.grey.shade200,
+              ),
+              height: 40,
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                const Icon(Icons.splitscreen),
+                const Text("|"),
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, setState1) {
+                          return AlertDialog(
+                            actions: [
+                              Column(
+                                children: [
+                                  RadioListTile(
+                                      title: Text("Varsayılan Sıralama"),
+                                      value: "0",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Alfabetik A-Z"),
+                                      value: "1",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Alfabetik Z-A"),
+                                      value: "2",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Yeniden Eskiye"),
+                                      value: "3",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Eskiden Yeniye"),
+                                      value: "4",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Fiyat Artan"),
+                                      value: "5",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Fiyat Azalan"),
+                                      value: "6",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Rastlege"),
+                                      value: "7",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                  RadioListTile(
+                                      title: Text("Puana Göre"),
+                                      value: "8",
+                                      groupValue: secilenSiralama,
+                                      onChanged: (value) {
+                                        setState1(() {
+                                          secilenSiralama = value;
+                                        });
+                                      }),
+                                ],
+                              )
+                            ],
+                          );
+                        });
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: const [
+                      Icon(Icons.swap_horiz_sharp),
+                      Text("Sırala"),
+                    ],
+                  ),
+                ),
+                const Text("|"),
+                Row(
+                  children: const [
+                    Icon(Icons.filter_alt_outlined),
+                    Text("Filtrele"),
+                  ],
+                ),
+              ]),
+            ),
+          ),
           Expanded(
             child: Container(
               margin: const EdgeInsets.only(right: 10),
@@ -66,7 +261,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                       mainAxisExtent: 300,
                     ),
                     delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
+                      (BuildContext context, int index) {
                         var productId = getProductFind.data[index].id;
                         return InkWell(
                           onTap: () {
@@ -111,7 +306,8 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                                             children: [
                                               Text(
                                                 ("${double.parse((getProductFind.data[index].priceSell ?? (getProductFind.data[index].priceSell = 0)).toStringAsFixed(2))}  TL"),
-                                                style: const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.red, fontWeight: FontWeight.bold),
+                                                style:
+                                                    const TextStyle(overflow: TextOverflow.ellipsis, color: Colors.red, fontWeight: FontWeight.bold),
                                               ),
                                             ],
                                           ),
@@ -138,5 +334,4 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       return const Center(child: Text("Hata oluştu!"));
     }
   }
-
 }

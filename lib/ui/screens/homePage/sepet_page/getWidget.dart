@@ -110,11 +110,13 @@ class _CartPageState extends ConsumerState<CartPage> {
             ElevatedButton(
               onPressed: () {
                 Constants().loading(context);
-                customerLoginWeb().then((value){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPage(url!),));
+                customerLoginWeb().then((value) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrderPage(url!),
+                      ));
                 });
-
-
               },
               child: const SizedBox(
                 width: double.infinity,
@@ -134,10 +136,12 @@ class _CartPageState extends ConsumerState<CartPage> {
   getCart2() {
     ref.watch(iGetCartInfoViewModel).getCart(widget.customerId);
   }
-  String? url="";
-  customerLoginWeb()async {
-   await ref.read(iCustomerLoginWebInfoViewModel).customerLoginWeb();
-    url=ref.read(iCustomerLoginWebInfoViewModel).customerLoginWebResponse.data.data?[0]?.loginRedirectUrl;
+
+  String? url = "";
+
+  customerLoginWeb() async {
+    await ref.read(iCustomerLoginWebInfoViewModel).customerLoginWeb();
+    url = ref.read(iCustomerLoginWebInfoViewModel).customerLoginWebResponse.data.data?[0]?.loginRedirectUrl;
   }
 
   deleteCartItem(productId, variantId) async {
@@ -261,9 +265,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                                             .then((value) {
                                           getApplicationToken(iGetApplicationLoginViewModel).then((value) {
                                             addToCart(
-                                                variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
-                                                productCount: oAnkiCount,
-                                                productId: oAnkiProductId)
+                                                    variantId: oAnkiVariantId == 0 ? "" : oAnkiVariantId,
+                                                    productCount: oAnkiCount,
+                                                    productId: oAnkiProductId)
                                                 .then((value) {
                                               getCart2();
                                               Navigator.pop(context);
@@ -272,7 +276,6 @@ class _CartPageState extends ConsumerState<CartPage> {
                                         });
                                       },
                                       child: const Icon(Icons.remove)),
-
                                   Text(
                                     "  ${product[index].count} Adet  ",
                                   ),
