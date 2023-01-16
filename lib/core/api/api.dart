@@ -107,11 +107,12 @@ class Api {
     return SearchModel.fromJson(response);
   }
 
-  Future<ProductListModel> getProductFindCategori({required categoriId}) async {
+  Future<ProductListModel> getProductFindCategori({required categoriId,required dynamic short}) async {
     var url = Constants.tDomain + Endpoints.getFind;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
       "category": categoriId,
+      "sort": short,
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
