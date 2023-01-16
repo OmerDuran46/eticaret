@@ -43,6 +43,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         leading: InkWell(
             onTap: () {
               Navigator.pop(context);
@@ -64,7 +65,6 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             },
             child: Container(
               alignment: Alignment.bottomCenter,
-              margin: const EdgeInsets.only(left: 30),
               padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width - 40,
               height: 50,
