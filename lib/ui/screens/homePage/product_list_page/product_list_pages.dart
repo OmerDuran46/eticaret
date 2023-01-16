@@ -21,6 +21,8 @@ class ProductListPage extends ConsumerStatefulWidget {
 }
 
 class _ProductListPageState extends ConsumerState<ProductListPage> {
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,6 +36,8 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     super.deactivate();
     ref.read(iGetProductListInfoViewModel).productListResponse.status = Status.loading;
   }
+  String? secilenSiralama = "0";
+  bool gridSize=true;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +112,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
   }
 
   getProductFindCategori() {
-    ref.read(iGetProductListInfoViewModel).getProductFindCategori(widget.categoriId);
+    ref.read(iGetProductListInfoViewModel).getProductFindCategori(widget.categoriId,secilenSiralama);
   }
 
   Widget productListWidget(IGetProductListInfoViewModel iGetProductListInfoViewModel) {
@@ -118,13 +122,13 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       );
     } else if (iGetProductListInfoViewModel.productListResponse.status == Status.completed) {
       var getProductFind = iGetProductListInfoViewModel.productListResponse.data;
-      String? secilenSiralama = "0";
+
       return Column(
         children: [
           Container(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
@@ -132,7 +136,12 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
               ),
               height: 40,
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                const Icon(Icons.splitscreen),
+                InkWell(onTap: () {
+                  setState(() {
+                   gridSize = gridSize == false?true:false;
+                  });
+
+                },child: const Icon(Icons.splitscreen)),
                 const Text("|"),
                 InkWell(
                   onTap: () {
@@ -145,84 +154,102 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                               Column(
                                 children: [
                                   RadioListTile(
-                                      title: Text("Varsayılan Sıralama"),
+                                      title: const Text("Varsayılan Sıralama"),
                                       value: "0",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Alfabetik A-Z"),
+                                      title: const Text("Alfabetik A-Z"),
                                       value: "1",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Alfabetik Z-A"),
+                                      title: const Text("Alfabetik Z-A"),
                                       value: "2",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Yeniden Eskiye"),
+                                      title: const Text("Yeniden Eskiye"),
                                       value: "3",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Eskiden Yeniye"),
+                                      title: const Text("Eskiden Yeniye"),
                                       value: "4",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Fiyat Artan"),
+                                      title: const Text("Fiyat Artan"),
                                       value: "5",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Fiyat Azalan"),
+                                      title: const Text("Fiyat Azalan"),
                                       value: "6",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Rastlege"),
+                                      title: const Text("Rastlege"),
                                       value: "7",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                   RadioListTile(
-                                      title: Text("Puana Göre"),
+                                      title: const Text("Puana Göre"),
                                       value: "8",
                                       groupValue: secilenSiralama,
                                       onChanged: (value) {
-                                        setState1(() {
+                                        setState(() {
                                           secilenSiralama = value;
+                                          getProductFindCategori();
+                                          Navigator.pop(context);
                                         });
                                       }),
                                 ],
@@ -256,8 +283,8 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
               child: CustomScrollView(
                 slivers: <Widget>[
                   SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 250,
+                    gridDelegate:  SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: gridSize==true?250:500,
                       mainAxisExtent: 300,
                     ),
                     delegate: SliverChildBuilderDelegate(

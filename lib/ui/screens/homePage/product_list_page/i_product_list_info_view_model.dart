@@ -7,5 +7,5 @@ import '../../../../core/models/product_list_model.dart';
 abstract class IGetProductListInfoViewModel with ChangeNotifier{
   ApiResponse<ProductListModel> get productListResponse;
   set productListResponse(ApiResponse<ProductListModel> value);
-  Future<void> getProductFindCategori(dynamic categoriId);
+  Future<void> getProductFindCategori(dynamic categoriId,dynamic short);
 }

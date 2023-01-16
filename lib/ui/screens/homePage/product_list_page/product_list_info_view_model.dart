@@ -23,9 +23,9 @@ class getProductListInfoViewModel with ChangeNotifier implements IGetProductList
   }
 
   @override
-  Future<void> getProductFindCategori(dynamic categoriId) async {
+  Future<void> getProductFindCategori(dynamic categoriId,dynamic short) async {
     try {
-      final result = await locator<Api>().getProductFindCategori(categoriId: categoriId);
+      final result = await locator<Api>().getProductFindCategori(categoriId: categoriId,short: short);
       productListResponse = ApiResponse.completed(result);
     } catch (e) {
       productListResponse = ApiResponse.error(e.toString());
