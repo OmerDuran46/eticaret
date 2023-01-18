@@ -54,7 +54,6 @@ class Api {
       "password": sifre,
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return LoginModel.fromJson(response);
   }
 
