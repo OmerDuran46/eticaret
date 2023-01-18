@@ -42,7 +42,6 @@ class Api {
       "pass": "Omer.456+",
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return ApplicationModel.fromJson(response);
   }
 
@@ -60,25 +59,32 @@ class Api {
   Future<ProductFindModel> getProduct({required urunId}) async {
     // ignore: prefer_interpolation_to_compose_strings
     var url = "${Constants.tDomain}${Endpoints.getFind}/" + urunId;
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "with_passive_sub_products": "true"};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "with_passive_sub_products": "true",
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return ProductFindModel.fromJson(response);
   }
 
   Future<FavoriModel> getFavori() async {
     var url = Constants.tDomain + Endpoints.getFavori;
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "MobileToken": Constants.parolaGetir()};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "MobileToken": Constants.parolaGetir(),
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return FavoriModel.fromJson(response);
   }
 
   Future<DeleteFavoriModel> deleteFavori({required String id}) async {
     var url = Constants.tDomain + Endpoints.deleteFavori;
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "MobileToken": Constants.parolaGetir(), "ProductId": id};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "MobileToken": Constants.parolaGetir(),
+      "ProductId": id,
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return DeleteFavoriModel.fromJson(response);
   }
 
@@ -86,7 +92,6 @@ class Api {
     var url = Constants.tDomain + Endpoints.getIndex;
     Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "new": "true"};
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return HomeModel.fromJson(response);
   }
 
@@ -94,7 +99,6 @@ class Api {
     var url = Constants.tDomain + Endpoints.getCategoriTree;
     Map<String, dynamic> body = {"token": Constants.tKey};
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return CategoriTreeModel.fromJson(response);
   }
 
@@ -102,11 +106,13 @@ class Api {
     var url = Constants.tDomain + Endpoints.getFind;
     Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "q": q};
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return SearchModel.fromJson(response);
   }
 
-  Future<ProductListModel> getProductFindCategori({required categoriId,required dynamic short}) async {
+  Future<ProductListModel> getProductFindCategori({
+    required categoriId,
+    required dynamic short,
+  }) async {
     var url = Constants.tDomain + Endpoints.getFind;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
@@ -114,27 +120,38 @@ class Api {
       "sort": short,
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return ProductListModel.fromJson(response);
   }
 
-  Future<AddToCartModel> addToCard({required productCount, required productId, required variantId}) async {
+  Future<AddToCartModel> addToCard({
+    required productCount,
+    required productId,
+    required variantId,
+  }) async {
     var url = Constants.tDomain + Endpoints.addToCart;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
       "new": "true",
       "data": jsonEncode([
-        {"customer_id": Constants.getCustomerId(), "cart_index": "-1", "product_id": productId, "variant_id": variantId ?? "", "count": productCount}
+        {
+          "customer_id": Constants.getCustomerId(),
+          "cart_index": "-1",
+          "product_id": productId,
+          "variant_id": variantId ?? "",
+          "count": productCount,
+        }
       ])
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
-
     return AddToCartModel.fromJson(response);
   }
 
   Future<GetCustomerModel> getCustomer() async {
     var url = Constants.tDomain + Endpoints.getCustomer;
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "MobileToken": Constants.parolaGetir()};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "MobileToken": Constants.parolaGetir(),
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return GetCustomerModel.fromJson(response);
@@ -142,7 +159,12 @@ class Api {
 
   Future<UrunDetailsModel> getProductDetails({required String urunId}) async {
     var url = Constants.tDomain + Endpoints.getProductDetails;
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "ProductId": urunId, "FetchDetails": "true", "FetchSubProducts": "true"};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "ProductId": urunId,
+      "FetchDetails": "true",
+      "FetchSubProducts": "true",
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return UrunDetailsModel.fromJson(response);
@@ -161,7 +183,11 @@ class Api {
 
   Future<AddFavoriModel> addFavorite({required String urunId}) async {
     var url = Constants.tDomain + Endpoints.addFavorite;
-    Map<String, dynamic> body = {"token": Constants.tKey, "MobileToken": Constants.parolaGetir(), "ProductId": urunId};
+    Map<String, dynamic> body = {
+      "token": Constants.tKey,
+      "MobileToken": Constants.parolaGetir(),
+      "ProductId": urunId,
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return AddFavoriModel.fromJson(response);
@@ -169,7 +195,11 @@ class Api {
 
   Future<GetCartModel> getCart(customerId) async {
     var url = "${Constants.tDomain}${Endpoints.getCart}$customerId";
-    Map<String, dynamic> body = {"token": Constants.applicationTokenGet(), "new": "true", "fetch_installment_list": "true"};
+    Map<String, dynamic> body = {
+      "token": Constants.applicationTokenGet(),
+      "new": "true",
+      "fetch_installment_list": "true",
+    };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
     return GetCartModel.fromJson(response);
@@ -186,7 +216,12 @@ class Api {
     return GetAdressModel.fromJson(response);
   }
 
-  Future<PriceAlarmModel> addPriceAlarm({required productId, alarmDay, productPrice, alarmPrice}) async {
+  Future<PriceAlarmModel> addPriceAlarm({
+    required productId,
+    alarmDay,
+    productPrice,
+    alarmPrice,
+  }) async {
     var url = Constants.tDomain + Endpoints.addAlarm;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
@@ -215,13 +250,28 @@ class Api {
     return DeleteAdressModel.fromJson(response);
   }
 
-  Future<UpdateCustomerModel> updateCustomer(name, surname, email, phone, mobile, address, postcode) async {
+  Future<UpdateCustomerModel> updateCustomer(
+    name,
+    surname,
+    email,
+    phone,
+    mobile,
+    address,
+    postcode,
+  ) async {
     var url = Constants.tDomain + Endpoints.updateCustomer;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
       "MobileToken": Constants.parolaGetir(),
-      "data":
-          jsonEncode({"Name": name, "Surname": surname, "Email": email, "Phone": phone, "Mobile": mobile, "Address": address, "Postcode": postcode})
+      "data": jsonEncode({
+        "Name": name,
+        "Surname": surname,
+        "Email": email,
+        "Phone": phone,
+        "Mobile": mobile,
+        "Address": address,
+        "Postcode": postcode,
+      })
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
 
@@ -234,7 +284,12 @@ class Api {
       "token": Constants.applicationTokenGet(),
       "new": "false",
       "data": jsonEncode([
-        {"customer_id": Constants.getCustomerId(), "cart_index": "-1", "product_id": productId, "variant_id": variantId}
+        {
+          "customer_id": Constants.getCustomerId(),
+          "cart_index": "-1",
+          "product_id": productId,
+          "variant_id": variantId,
+        }
       ])
     };
     var response = await _apiBaseHelper.post(url: url, body: body);
@@ -280,7 +335,15 @@ class Api {
   }
 
   Future<CreateCustomerModel> createCustomer(
-      name, surname, email, password, phone, isEmailNotificationOn, isSmsNotificationOn, isPhoneCallNotificationOn) async {
+    name,
+    surname,
+    email,
+    password,
+    phone,
+    isEmailNotificationOn,
+    isSmsNotificationOn,
+    isPhoneCallNotificationOn,
+  ) async {
     var url = Constants.tDomain + Endpoints.createCustomer;
     Map<String, dynamic> body = {
       "token": Constants.applicationTokenGet(),
