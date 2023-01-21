@@ -40,6 +40,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: Material(
         color: Colors.black,
         child: Padding(
@@ -62,7 +63,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                 ),
                 const SizedBox(height: 3),
                 SizedBox(
-                  height: 40,
+                  height: (MediaQuery.of(context).size.width * 2)/15,
                   child: TextFormField(
                     controller: controllerName,
                     decoration: const InputDecoration(
@@ -266,6 +267,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                 ),
                 const SizedBox(height: 15),
                 CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
                   checkColor: Colors.white,
                   activeColor: Colors.transparent,
                   value: bilgilendirmeEposta,
@@ -280,6 +282,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                   },
                 ),
                 CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
                   checkColor: Colors.white,
                   activeColor: Colors.transparent,
                   value: bilgilendirmeSms,
@@ -294,6 +297,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                   },
                 ),
                 CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
                   checkColor: Colors.white,
                   activeColor: Colors.transparent,
                   value: bilgilendirmeTelefonArama,
@@ -308,6 +312,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                   },
                 ),
                 CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
                   checkColor: Colors.white,
                   activeColor: Colors.transparent,
                   value: kvkk,
@@ -344,11 +349,7 @@ class _MemberRegistrationPageState extends ConsumerState<MemberRegistrationPage>
                                     backgroundColor: Colors.green,
                                     textColor: Colors.white,
                                     fontSize: 16.0);
-
                               }
-                          
-
-
                             });
                           }
                         },
