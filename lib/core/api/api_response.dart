@@ -4,8 +4,11 @@ class ApiResponse<T> {
   late String message;
 
   ApiResponse.initial(this.message) : status = Status.initial;
+
   ApiResponse.loading(this.message) : status = Status.loading;
+
   ApiResponse.completed(this.data) : status = Status.completed;
+
   ApiResponse.error(this.message) : status = Status.error;
 
   @override
@@ -14,4 +17,5 @@ class ApiResponse<T> {
   }
 }
 
-enum Status { loading, completed, error,initial }
+enum Status { loading, completed, error, initial }
+

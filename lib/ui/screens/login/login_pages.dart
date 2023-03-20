@@ -244,7 +244,7 @@ class _CustomerLoginState extends ConsumerState<CustomerLogin> {
                 textColor: Colors.white,
                 fontSize: 16.0)
             .then((value) {
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const HomePage(),
